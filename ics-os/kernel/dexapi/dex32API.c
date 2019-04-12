@@ -24,6 +24,12 @@ although a user procedure call is in the works
 
 #include "dex32API.h"
 
+int kchown(int fd, int uid, int gid){
+   printf("Changing owner of fd=%d to user id=%d and group id=%d\n", fd, uid, gid);
+   //Actual code to change file ownership is placed here.
+   return 0; //0-success
+}
+
 int dex32_getversion(){
    return DEX32_OSVER;
 };
@@ -66,6 +72,9 @@ void api_init(){
    };
      
 /************* Add the functions that could be used by user applications*******/
+   //kchown
+   api_addsystemcall(0x9F, kchown, 0, 0);
+   //
    api_addsystemcall(0, dex32_getversion,0,0);
    api_addsystemcall(1, kb_dequeue,0,0);
    api_addsystemcall(2, getprocessid,0,0);
